@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vue 3 Introt</title>
+</head>
+<body>
+  <div id="myApp">
+    <h1>Batman Quotes <small>{{newQuote}}</small></h1>
+    <input type="text" v-model="newQuote" v-on:keyup.enter="onAddQuote">
+    <ul>
+      <li v-for="({quote,author}, i) in quotes" :key="i">
+        <blockquote>{{i+1}} - {{quote}}</blockquote>
+        <span>{{author}}</span>
+        </li>
+    </ul>
+   <p ></p>
+  </div>
+
+  <script src="https://unpkg.com/vue@3"></script>
+  <script src="app.js"></script>
+</body>
+</html>
