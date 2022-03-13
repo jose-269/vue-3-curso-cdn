@@ -7,7 +7,7 @@
 
     <div v-if="isValidQuestion">
       <h2>{{ question	}}</h2>
-      <h1>{{ answer === 'yes' ? 'SI' : 'NO' }}</h1>
+      <h1>{{ answer }}</h1>
     </div>
   </div>
 </template>
@@ -26,18 +26,27 @@ export default {
 	watch: {
 		question(newValue, oldValue) {
 			this.isValidQuestion = false;
+      console.log({newValue});
 			if(!newValue.includes('?')) return;
+      console.log({newValue});
 			this.getAnswer();
 			this.isValidQuestion = true;
 		}
 	},
 	methods: {
 		async getAnswer() {
-			this.answer = 'Pensando';
-
-			const { answer, image} = await fetch('https://yesno.wtf/api').then(res => res.json());
-			this.answer = answer;
-			this.img = image
+      try {
+        
+        this.answer = 'Pensando';
+  
+        const { answer, image} = await fetch('https://yesno.wtf/api').then(res => res.json());
+        this.answer = answer  === 'yes' ? 'SI' : 'NO';
+        this.img = image
+      } catch (error) {
+        console.log('IndecisionComponent: ', error);
+        this.answer = 'No se pudo cargar la API';
+        this.img = null;
+      }
 		}
 	},
 };
