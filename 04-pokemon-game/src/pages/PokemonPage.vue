@@ -1,9 +1,13 @@
 <template>
 <h1 v-if="!pokemon">Espere porfavor...</h1>
 		<div v-else>
-      <h1>Quien es este Pokemon?</h1>
-				<PokemonPicture :pokemon-id="pokemon.id" :show-pokemon="showPokemon" />
+      		<h1>Quien es este Pokemon?</h1>
+				<PokemonPicture 
+					:pokemon-id="pokemon.id" 
+					:show-pokemon="showPokemon" />
+
 				<PokemonOptions :pokemon="pokemonsArr" @selection="checkAnswer" />
+
 				<template v-if="showAnswer">
 					<h2 class="fade-in">{{message}}</h2>
 					<button @click="newGame">Nuevo juego</button>
@@ -14,24 +18,24 @@
 <script>
 import PokemonPicture from '@/components/PokemonPicture';
 import PokemonOptions from '@/components/PokemonOptions'
-import getPokemonsOptions from '@/helpers/getPokemonOptions';
+import getPokemonOptions from '@/helpers/getPokemonOptions';
 
-// console.log(getPokemonsOptions());
-// getPokemonsOptions()
+// console.log(getPokemonOptions());
+// getPokemonOptions()
 export default {
     name: 'PokemonPage',
     data() {
         return {
             pokemonsArr: [],
-						pokemon: null,
-						showPokemon: false,
-						showAnswer : false,
-						message: ''
+			pokemon: null,
+			showPokemon: false,
+			showAnswer : false,
+			message: ''
         }
     },
     methods: {
 			async mixPokemonsArray() {
-					this.pokemonsArr = await getPokemonsOptions();
+					this.pokemonsArr = await getPokemonOptions();
 					const rndInt = Math.floor(Math.random() * 4);
 					this.pokemon = this.pokemonsArr[rndInt];
 			},
@@ -60,7 +64,7 @@ export default {
         PokemonPicture,
         PokemonOptions
     },
-    created () {
+    mounted () {
        this.mixPokemonsArray();
     },
 }
